@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.tour</groupId>
+		<artifactId>tour-of-heroes</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>angular-tour-of-heroes</artifactId>
+	<packaging>war</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.tour</groupId>
+			<artifactId>java-tour-of-heroes</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>angular-tour-of-heroes</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>none</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp</directory>
+							<includes>
+								<!-- Embed the version in the display name -->
+								<include>**/web.xml</include>
+							</includes>
+						</resource>
+					</webResources>
+					<warSourceDirectory>dist</warSourceDirectory>
+					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.3</version>
+				<executions>
+					<execution>
+						<id>install-node-and-npm</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>${nodejs.version}</nodeVersion>
+							<npmVersion>${npm.version}</npmVersion>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>npm-install</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm-run-build</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>${npm.build.command}</arguments>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<installDirectory>node/</installDirectory>
+					<workingDirectory>${project.basedir}/src/main/webapp</workingDirectory>
+					<skip>${frontend.skip}</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>non-prod-build</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<npm.build.command>run build</npm.build.command>
+			</properties>
+		</profile>
+
+		<!-- <profile> <id>prod-build</id> <properties> <npm.build.command>run 
+			build-prod</npm.build.command> </properties> </profile> <profile> <id>tomcat8x-deploy-tour-of-heroes-dev</id> 
+			<build> <pluginManagement> <plugins> <plugin> <groupId>org.codehaus.cargo</groupId> 
+			<artifactId>cargo-maven2-plugin</artifactId> <version>${cargo.version}</version> 
+			<configuration> <container> <containerId>tomcat8x</containerId> <type>remote</type> 
+			</container> <configuration> <type>runtime</type> <properties> <cargo.remote.username>tomcat</cargo.remote.username> 
+			<cargo.remote.password>savvis123</cargo.remote.password> <cargo.remote.uri>http://omhtomappdv01.dev.qintra.com:51701/manager/text 
+			</cargo.remote.uri> </properties> </configuration> <deployer> <type>remote</type> 
+			</deployer> <deployables> <deployable> <groupId>${project.groupId}</groupId> 
+			<artifactId>${project.artifactId}</artifactId> <type>war</type> <properties> 
+			<context>${project.artifactId}</context> </properties> </deployable> </deployables> 
+			</configuration> </plugin> </plugins> </pluginManagement> </build> </profile> -->
+
+	</profiles>
+
+</project>

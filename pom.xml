@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- <parent> <groupId>com.savvis.gsd.maven</groupId> <artifactId>jdk8-springboot-parent-pom</artifactId> 
+		<version>1.2.5-SNAPSHOT</version> </parent> -->
+
+	<groupId>com.tour</groupId>
+	<artifactId>tour-of-heroes</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>tour-of-heroes</name>
+	<description>tour-of-heroes poc project</description>
+
+	<modules>
+		<module>java-tour-of-heroes</module>
+		<module>angular-tour-of-heroes</module>
+	</modules>
+
+	<properties>
+		<nodejs.version>v8.11.1</nodejs.version>
+		<npm.version>6.0.0</npm.version>
+		<spring-boot-version>2.0.1.RELEASE</spring-boot-version>
+	</properties>
+
+	<dependencies>
+
+	</dependencies>
+
+</project>
